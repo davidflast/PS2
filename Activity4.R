@@ -1,21 +1,34 @@
-v <- c(.3,.5,.1,.1,0,0,0,.2,.2)
+v <- c(3,51,20,10,0,0,0,543,226)
 # 1
-# @Param votes is the vector or matrix of vote totals
-# @Param test_M is whether or not one wants the M statistic
-# @Param test_D is whether or not one wants the D statistic
-violations <- function(votes, test_M = TRUE, test_D = TRUE){
+# Args:
+#   votes: A vector or matrix of vote returns
+#   test_M: If True does the M statistic, if False it doesnt
+#   test_D: If True does the D statistic, if False it doesnt
+# Returns:
+#   The M and D statistics if asked for, the percentage that each digit occurs, 
+#   and a vector of vote returns
+
+benfords.law <- function(votes, test_M = TRUE, test_D = TRUE){
   vote_vector <- as.vector(votes)
-  #Compute the similar part of the two statistics
-  similar_comp <- vote_vector - log10(1+1/1:9)
-  #Computes m if m is wanted
+  # Creates a vector of the first digits
+  digit_one <- as.numeric(substr(vote_vector,start=1, stop=1))
+  # Count the number of each first digit
+  digit_vector <- NULL
+  for (i in 1:9) {
+    digit_vector <- c(digit_vector, length(digit_one[digit_one == i]))
+  }
+  # Compute the similar part of the two statistics
+  similar_comp <- digit_vector - log10(1+1/1:9)
+  # Computes m if m is wanted
   ifelse(test_M, m <- (max(similar_comp)), m <- NULL)
-  #Computes d if d is wanted
+  # Computes d if d is wanted
   ifelse(test_D, d <- sqrt(sum(similar_comp^2)), d <- NULL)
-  #Figures out the percentage of the total of each vote count
-  proportion <- paste((vote_vector/sum(vote_vector))*100, "%", sep = "")
+  # Figures out the percentage of the total of each vote count
+  p <- round((digit_vector/sum(digit_vector))*100, 2)
+  proportion <- paste(p, "%", sep = "")
   return(list("M" = m, "D" = d,"Proportion" = proportion, "Election_returns" = vote_vector))
 }
-violations(v)
+benfords.law(v)
 
 #2
 
