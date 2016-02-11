@@ -31,17 +31,25 @@ benfords.law <- function(votes, test_M = TRUE, test_D = TRUE){
 benfords.law(v)
 
 #2
-
-am <- NULL
-if (m > .851) {am <- .1}
-if (m > .967) {am <-.05}
-if (m > 1.212) {am <- .01}
-dm <- NULL
-if (d > 1.212) {dm <- .1}
-if (d > 1.330) {dm <-.05}
-if (d > 1.569) {dm <- .01}
-?return
-
+print.benfords <- function(votes){
+  # analyzes the data using the function to do the statistics
+  ben_law <- benfords.law(votes)
+  m <- ben_law$M
+  d <- ben_law$D
+  # ma is the critical value for m statistic
+  ma <- NULL
+  if (m > .851) {ma <- "*"}
+  if (m > .967) {ma <- "**"}
+  if (m > 1.212) {ma <- "***"}
+  # da is the critical value for the d statistic
+  da <- NULL
+  if (d > 1.212) {da <- "*"}
+  if (d > 1.330) {da <- "**"}
+  if (d > 1.569) {da <- "***"}
+  
+  
+  return()
+}
 
 
 
