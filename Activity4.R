@@ -1,4 +1,4 @@
-v <- c(3,51,20,10,0,0,0,543,226)
+v <- c(3,51,20,10,20,6534,8765,543,226)
 # 1
 # Args:
 #   votes: A vector or matrix of vote returns
@@ -31,16 +31,33 @@ benfords.law <- function(votes, test_M = TRUE, test_D = TRUE){
 benfords.law(v)
 
 #2
-
-am <- NULL
-if (m > .851) {am <- .1}
-if (m > .967) {am <-.05}
-if (m > 1.212) {am <- .01}
-dm <- NULL
-if (d > 1.212) {dm <- .1}
-if (d > 1.330) {dm <-.05}
-if (d > 1.569) {dm <- .01}
-?return
+print.benfords <- function(votes){
+  # analyzes the data using the function to do the statistics
+  ben_law <- benfords.law(votes)
+  m <- ben_law$M
+  d <- ben_law$D
+  # ma is the critical value for m statistic
+  ma <- NULL
+  if (m > .851) {ma <- "*"}
+  if (m > .967) {ma <- "**"}
+  if (m > 1.212) {ma <- "***"}
+  # da is the critical value for the d statistic
+  da <- NULL
+  if (d > 1.212) {da <- "*"}
+  if (d > 1.330) {da <- "**"}
+  if (d > 1.569) {da <- "***"}
+  # creates the columns of the table
+  stat_vec <- c(m, d)
+  critical_vec <- c(ma, da)
+  # bind and the name the table
+  table <- cbind(stat_vec, critical_vec)
+  rownames(table) <- c("Leemis' m", "Cho-Gains d")
+  colnames(table) <- c("Statistic", "Critical Values")
+  # prints out a table and an explanation of the alpha numbers
+  print(table)
+  cat("Alpha numbers: *=0.1, **=0.05, ***=0.01")
+}
+print.benfords(v)
 
 
 
