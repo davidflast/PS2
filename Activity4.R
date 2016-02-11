@@ -1,4 +1,4 @@
-v <- c(3,51,20,10,0,0,0,543,226)
+v <- c(3,51,20,10,20,6534,8765,543,226)
 # 1
 # Args:
 #   votes: A vector or matrix of vote returns
@@ -46,10 +46,19 @@ print.benfords <- function(votes){
   if (d > 1.212) {da <- "*"}
   if (d > 1.330) {da <- "**"}
   if (d > 1.569) {da <- "***"}
-  
-  
-  return()
+  # creates the columns of the table
+  stat_vec <- c(m, d)
+  critical_vec <- c(ma, da)
+  # bind and the name the table
+  table <- cbind(stat_vec, critical_vec)
+  rownames(table) <- c("Leemis' m", "Cho-Gains d")
+  colnames(table) <- c("Statistic", "Critical Values")
+  # prints out a table and an explanation of the alpha numbers
+  print(table)
+  cat("Alpha numbers: *=0.1, **=0.05, ***=0.01")
 }
+print.benfords(v)
+
 
 
 
