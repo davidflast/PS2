@@ -1,14 +1,14 @@
 v <- c(3,51,20,10,20,6534,8765,543,226)
 # 1
-# Args:
-#   votes: A vector or matrix of vote returns
-#   test_M: If True does the M statistic, if False it doesnt
-#   test_D: If True does the D statistic, if False it doesnt
-# Returns:
-#   The M and D statistics if asked for, the percentage that each digit occurs, 
-#   and a vector of vote returns
 
 benfords.law <- function(votes, test_M = TRUE, test_D = TRUE){
+  # Args:
+  #   votes: A vector or matrix of vote returns
+  #   test_M: If True does the M statistic, if False it doesnt
+  #   test_D: If True does the D statistic, if False it doesnt
+  # Returns:
+  #   The M and D statistics if asked for, the percentage that each digit occurs, 
+  #   and a vector of vote returns
   vote_vector <- as.vector(votes)
   # Creates a vector of the first digits
   digit_one <- as.numeric(substr(vote_vector,start=1, stop=1))
@@ -28,10 +28,16 @@ benfords.law <- function(votes, test_M = TRUE, test_D = TRUE){
   proportion <- paste(p, "%", sep = "")
   return(list("M" = m, "D" = d,"Proportion" = proportion, "Election_returns" = vote_vector))
 }
-benfords.law(v)
 
-#2
+# 2
+
 print.benfords <- function(votes){
+  # Args:
+  #   votes: a vector or matrix of vote values
+  #
+  # Returns:
+  #   A table of m and d statistics and their corresponding alpha
+  #   values
   # analyzes the data using the function to do the statistics
   ben_law <- benfords.law(votes)
   m <- ben_law$M
@@ -57,7 +63,18 @@ print.benfords <- function(votes){
   print(table)
   cat("Alpha numbers: *=0.1, **=0.05, ***=0.01")
 }
-print.benfords(v)
+
+benfords.csv <- function(votes,filename) {
+  # Args:
+  #   votes: vector or matrix of vote values
+  #   filename: the name of the created csv file
+  #
+  # Returns:
+  #    a csv file with the output of print.benfords
+  print.benfords(votes)
+  sink(paste(filename, ".csv", sep=""), append=TRUE, split=FALSE)
+}
+
 
 
 
